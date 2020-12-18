@@ -1,23 +1,22 @@
 import logo from './logo.svg';
+import React, {useState, useEffect} from 'react'
 import './App.css';
 
 function App() {
+  const [post, setPost] = useState('')
+
+  useEffect(()=> {
+    fetch('http://localhost:3000/posts')
+      .then(resp=> resp.json())
+      .then(data => {
+        setPost(data.post)
+      })
+    }, []);
+  
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>{post === '' ? 'No Posts' : post}</h1>
     </div>
   );
 }
